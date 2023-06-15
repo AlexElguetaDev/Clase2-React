@@ -1,5 +1,6 @@
 import React from 'react';
 import './style.css';
+import Notes from './components/Notes.jsx';
 
 const notes = [
   {
@@ -29,11 +30,8 @@ export default function App() {
 
   return (
     <div>
-      {notes.map((note) => (
-        <div key={note.id}>
-          <h1>{note.content}</h1>
-          <p>{note.date}</p>
-        </div>
+      {notes.map((notes) => (
+        <Notes {...notes} />
       ))}
     </div>
   );
