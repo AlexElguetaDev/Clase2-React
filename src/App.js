@@ -1,6 +1,8 @@
 import React from 'react';
 import './style.css';
 import Notes from './components/Notes.jsx';
+import { Pedrito } from './components/Pepito.jsx';
+import Juanito from './components/Juanito.jsx';
 
 const notes = [
   {
@@ -33,6 +35,10 @@ export default function App() {
       {notes.map((notes) => (
         <Notes {...notes} />
       ))}
+      {/* Modulo Nombrado */}
+      <Pedrito />
+      {/* Modulo por defecto */}
+      <Juanito />
     </div>
   );
 }
