@@ -1,8 +1,10 @@
 import React from 'react';
 import './style.css';
 import Notes from './components/Notes.jsx';
-import { Pedrito } from './components/Pepito.jsx';
+import { Pedrito, Numero } from './components/Pepito.jsx';
 import Juanito from './components/Juanito.jsx';
+
+const Number = Numero();
 
 const notes = [
   {
@@ -32,10 +34,11 @@ export default function App() {
 
   return (
     <div>
+      <h1>El numero de la clase es {Number}</h1>
       {notes.map((notes) => (
         <Notes {...notes} />
       ))}
-      {/* Modulo Nombrado */}
+      {/* Modulo Nombrado, Tratar de usar esto siempre */}
       <Pedrito />
       {/* Modulo por defecto */}
       <Juanito />
