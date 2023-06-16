@@ -1,7 +1,8 @@
 import React from 'react';
 
 const Notes = (props) => {
-  console.log({ props });
+  /* console.log({ props }); */
+  console.table(props);
   debugger;
   const { content, date } = props;
   return (
