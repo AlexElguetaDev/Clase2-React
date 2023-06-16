@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style.css';
 import Notes from './components/Notes.jsx';
 import { Pedrito, Numero } from './components/Pepito.jsx';
@@ -31,17 +31,42 @@ export default function App() {
   if (typeof notes === 'undefined' || notes.length === 0) {
     return 'No tenemos notas que mostrar';
   }
+  const [not, setNot] = useState(notes);
+  const [newNote, setNewNote] = useState('');
+
+  const handleChange = (event) => {
+    setNewNote(event.target.value);
+  };
+
+  const handleClick = (event) => {
+    const noteToAddToState = {
+      id: notes.length + 1,
+      content: newNote,
+      date: new Date().toISOString(),
+      important: Math.random() < 0.5,
+    };
+    console.log(noteToAddToState);
+    const addNote = not.concat(noteToAddToState);
+    setNot(addNote);
+    setNewNote('')
+  };
 
   return (
     <div>
       <h1>El numero de la clase es {Number}</h1>
-      {notes.map((notes) => (
-        <Notes {...notes} />
-      ))}
+      <ol>
+        {not.map((notes) => (
+          <Notes {...notes} />
+        ))}
+      </ol>
       {/* Modulo Nombrado, Tratar de usar esto siempre */}
       <Pedrito />
       {/* Modulo por defecto */}
       <Juanito />
+      <div>
+        <input type="text" onChange={handleChange} value={newNote} />
+        <button onClick={handleClick}>Crear Nota</button>
+      </div>
     </div>
   );
 }
