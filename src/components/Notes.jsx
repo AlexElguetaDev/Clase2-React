@@ -1,7 +1,9 @@
 import React from 'react';
 
-const Notes = ({ id, content, date }) => {
-  console.log(id, content, date);
+const Notes = (props) => {
+  console.log({ props });
+  debugger;
+  const { content, date } = props;
   return (
     <ol>
       <h1>{content}</h1>
