@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.css';
 import Notes from './components/Notes.jsx';
 import { Pedrito, Numero } from './components/Pepito.jsx';
@@ -6,50 +6,42 @@ import Juanito from './components/Juanito.jsx';
 
 const Number = Numero();
 
-const notes = [
-  {
-    id: 1,
-    content: 'HTML is easy',
-    date: '2019-05-30T17:30:31.098Z',
-    important: true,
-  },
-  {
-    id: 2,
-    content: 'Browser can execute only JavaScript',
-    date: '2019-05-30T18:39:34.091Z',
-    important: false,
-  },
-  {
-    id: 3,
-    content: 'GET and POST are the most important methods of',
-    date: '2019-05-30T19:20:14.298Z',
-    important: true,
-  },
-];
-
 export default function App() {
-  if (typeof notes === 'undefined' || notes.length === 0) {
-    return 'No tenemos notas que mostrar';
-  }
-  const [not, setNot] = useState(notes);
+  const [not, setNot] = useState([]);
   const [newNote, setNewNote] = useState('');
+
+  useEffect(() => {
+    console.log('useEffect');
+    setTimeout(() => {
+      console.log('Ahora');
+      fetch('https://jsonplaceholder.typicode.com/posts')
+        .then((response) => response.json())
+        .then((json) => {
+          console.log('seteando las notas de la API');
+          setNot(json);
+        });
+    }, 2000);
+  }, []);
 
   const handleChange = (event) => {
     setNewNote(event.target.value);
   };
 
-  const handleClick = (event) => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     const noteToAddToState = {
-      id: notes.length + 1,
-      content: newNote,
-      date: new Date().toISOString(),
-      important: Math.random() < 0.5,
+      id: not.length + 1,
+      title: newNote,
+      body: newNote,
     };
     console.log(noteToAddToState);
-    const addNote = not.concat(noteToAddToState);
-    setNot(addNote);
-    setNewNote('')
+    /* const addNote = not.concat(noteToAddToState); */
+    setNot([...not, noteToAddToState]);
+    setNewNote('');
   };
+
+  console.log('render');
+  if (not.length === 0) return 'Hola';
 
   return (
     <div>
@@ -63,10 +55,10 @@ export default function App() {
       <Pedrito />
       {/* Modulo por defecto */}
       <Juanito />
-      <div>
+      <form onSubmit={handleSubmit}>
         <input type="text" onChange={handleChange} value={newNote} />
-        <button onClick={handleClick}>Crear Nota</button>
-      </div>
+        <button>Crear Nota</button>
+      </form>
     </div>
   );
 }

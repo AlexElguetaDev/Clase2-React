@@ -1,10 +1,11 @@
 import React from 'react';
 
-const Notes = ({ content, date }) => {
+const Notes = ({ userId, id, title, body }) => {
   return (
     <ol>
-      <h1>{content}</h1>
-      <p>{date}</p>
+      {userId}
+      <h1>{title}</h1>
+      <p>{body}</p>
     </ol>
   );
 };
