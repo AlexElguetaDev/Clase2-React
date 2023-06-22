@@ -9,19 +9,19 @@ const Number = Numero();
 export default function App() {
   const [not, setNot] = useState([]);
   const [newNote, setNewNote] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log('useEffect');
+    setLoading(true);
     setTimeout(() => {
-      console.log('Ahora');
       fetch('https://jsonplaceholder.typicode.com/posts')
         .then((response) => response.json())
         .then((json) => {
-          console.log('seteando las notas de la API');
           setNot(json);
+          setLoading(false);
         });
     }, 2000);
-  }, []);
+  }, [newNote]);
 
   const handleChange = (event) => {
     setNewNote(event.target.value);
@@ -40,12 +40,10 @@ export default function App() {
     setNewNote('');
   };
 
-  console.log('render');
-  if (not.length === 0) return 'Hola';
-
   return (
     <div>
       <h1>El numero de la clase es {Number}</h1>
+      {loading ? 'Cargando..' : ''}
       <ol>
         {not.map((notes) => (
           <Notes {...notes} />
